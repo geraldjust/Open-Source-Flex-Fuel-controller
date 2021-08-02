@@ -1,10 +1,12 @@
+#include "defines.h"
+
 /***********************************************
  * Debug
  ***********************************************/
 #ifdef DEBUG
 #define SERIAL_BAUD    115200
 
-static void debugPrint(void)
+void debugPrint(void)
 {
   Serial.print("Hrtz: " + freq );
   Serial.print("  ethanol%: " + ethanol) ;
@@ -15,7 +17,7 @@ static void debugPrint(void)
   Serial.println(Temperature_C);
 }
 
-static void initAndRegisterSerialTerminalDebug()
+void initAndRegisterSerialTerminalDebug(void)
 {
   Serial.begin(SERIAL_BAUD);
   flexFuelServiceFnTbl[FF_HDLR_SERIAL_PRINT_DIAG] = debugPrint;
@@ -23,22 +25,3 @@ static void initAndRegisterSerialTerminalDebug()
 }
 #endif
 
-
-/************************************************
- * Initialization functions
- ************************************************/
-void registerServiceFns(void)
-{
-  /* ESSENTIAL FEATURES: DO NOT COMMENT ANY OF THESE OUT UNLESS YOU WANT YOUR CAR COOKED */
-  flexFuelServiceFnTbl[FF_HDLR_CALC_FREQ_DCYCLE] = calcFreqAndDutyCycle;
-  flexFuelServiceFnTbl[FF_HDLR_CALC_ETH_CONTENT] = calcEthContent;
-
-  /* Optional features: Initialize if desired, comment out if not needed. */
-  flexFuelServiceFnTbl[FF_HDLR_CALC_FUEL_TEMP]   = calcFuelTemp;
-  flexFuelServiceFnTbl[FF_HDLR_FAILSAFE]   = checkFailsafeValues;
-
-  /* Debug features: Only used for debugging. */
-  #ifdef DEBUG
-  initAndRegisterSerialTerminalDebug();
-  #endif
-}
