@@ -1,3 +1,8 @@
+#include "defines.h"
+
+/* Scale 0-100% ethanol to 8 bit value (0-255) */
+#define SCALE_ETH_TO_8_BIT(e)     (e * 2.55)
+
 /************************************************
  * Interrupt services
  ************************************************/
@@ -18,10 +23,10 @@ void READ_Frequency() {
 
 //rise starts in the freq cycle and ends in a falling
 void READ_DutyCycle() {
-  elapsed_Duty_MS = micros() - start_Duty_MS;//falling edge
+  elapsed_Duty_MS = micros() - start_Duty_MS; //falling edge
 }
 
-
+/* Write ethanol content to voltage out pin. */
 void WRITE_AnalogDAC(){
-  digitalWrite(PIN_V_OUT, ethanol*2.55);// from 0-100 to 0-255
+  digitalWrite(PIN_V_OUT, SCALE_ETH_TO_8_BIT(ethanol));
 }
