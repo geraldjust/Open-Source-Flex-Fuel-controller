@@ -55,7 +55,7 @@ extern float D_cycle;
 extern volatile unsigned long start_Duty_MS;
 extern volatile unsigned long elapsed_Duty_MS;
 extern unsigned int ethanol;
-extern bool isError = false;
+extern bool isError;
 extern float Temperature_C;
 extern unsigned int Temperature_F;
 extern flexFuelService_t flexFuelServiceFnTbl[];
